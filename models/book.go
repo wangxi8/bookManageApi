@@ -1,7 +1,6 @@
 package models
 
 import (
-    "crud/routers"
     "database/sql"
     "fmt"
 
