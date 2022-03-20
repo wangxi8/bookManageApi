@@ -59,23 +59,7 @@ func queryAll() {
 
     //    //普通demo
     for rows.Next() {
-        var name string
-        var isbn string
-        var author string
-        var number int
-        var location string
-        var mobile int
-        var wechat string
-        var desc string
-
-        rows.Columns()
-        err = rows.Scan(&userid, &username, &userage, &usersex)
-        checkErr(err)
-
-        fmt.Println(userid)
-        fmt.Println(username)
-        fmt.Println(userage)
-        fmt.Println(usersex)
+        
     }
 }
 
