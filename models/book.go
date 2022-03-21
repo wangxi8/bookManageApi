@@ -4,7 +4,7 @@ import (
     "database/sql"
     "fmt"
 
-    "github.com/go-sql-driver/mysql"
+    _"github.com/go-sql-driver/mysql"
 )
 
 //增加数据
@@ -62,14 +62,35 @@ func queryAll() {
         
     }
 }
+var (
+	bookList map[string]*Book
+)
 
-func query(id string){
-	db, err := sql.Open("mysql", "wx:wang...123@tcp(20.27.155.16:3306)/bookManage?charset=utf8")
+func init(){
+    bookList = make(map[string]*Book)
+}
+ type Book struct{
+    id int
+    name string
+ }
+func Query(id string) (a map[string]*Book,err1 error){
+	db, err := sql.Open("mysql", "wx:wang...123@tcp(120.27.155.16:3306)/bookManage?charset=utf8")
     checkErr(err)
 
-    rows, err := db.Query("SELECT * FROM book where id = " + id)
+   //rows, err := db.Query("SELECT id,name FROM book where id = " + id)
+rows, err := db.Query("SELECT id,name FROM book")
     checkErr(err)
-    return rows
+    for rows.Next() {
+        var id1 int
+        var name1 string
+
+        rows.Columns()
+        err = rows.Scan(&id1, &name1)
+        checkErr(err)
+        b := Book{1,"111",}
+	bookList[name1] = &b
+    }
+    return bookList,nil
 }
 
 func checkErr(err error) {
