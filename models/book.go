@@ -3,99 +3,69 @@ package models
 import (
     "database/sql"
     "fmt"
-
+    "github.com/astaxie/beego/orm"
     _"github.com/go-sql-driver/mysql"
 )
 
-//增加数据
-func insert() {
-    db, err := sql.Open("mysql", "wx:wang...123@tcp(20.27.155.16:3306)/bookManage?charset=utf8")
-    checkErr(err)
-
-    stmt, err := db.Prepare(`INSERT user (userid,username,userage,usersex) values (?,?,?,?)`)
-    checkErr(err)
-    res, err := stmt.Exec(1, "Mary", 20, 1)
-    checkErr(err)
-    id, err := res.LastInsertId()
-    checkErr(err)
-    fmt.Println(id)
+type Book struct{
+    Id int `orm:"column(id)"`
+    Name string `orm:"column(name)"`
+    Isbn string `orm:"column(isbn)"`
+    Author string `orm:"column(author)"`
+    Number int `orm:"column(number)"`
+    Location string `orm:"column(location)"`
+    Mobile int `orm:"column(mobile)"`
+    Wechat string `orm:"column(wechat)"`
+    Desc string `orm:"column(desc)"`
 }
 
-//删除数据
-func remove() {
-    db, err := sql.Open("mysql", "wx:wang...123@tcp(20.27.155.16:3306)/bookManage?charset=utf8")
-    checkErr(err)
-
-    stmt, err := db.Prepare(`DELETE FROM user WHERE userid=?`)
-    checkErr(err)
-    res, err := stmt.Exec(1)
-    checkErr(err)
-    num, err := res.RowsAffected()
-    checkErr(err)
-    fmt.Println(num)
-}
-
-//更新数据
-func update() {
-    db, err := sql.Open("mysql", "wx:wang...123@tcp(20.27.155.16:3306)/bookManage?charset=utf8")
-    checkErr(err)
-
-    stmt, err := db.Prepare(`UPDATE user SET userage=?,usersex=? WHERE userid=?`)
-    checkErr(err)
-    res, err := stmt.Exec(21, 2, 2)
-    checkErr(err)
-    num, err := res.RowsAffected()
-    checkErr(err)
-    fmt.Println(num)
-}
-
-//查询数据
-func queryAll() {
-    db, err := sql.Open("mysql", "wx:wang...123@tcp(20.27.155.16:3306)/bookManage?charset=utf8")
-    checkErr(err)
-
-    rows, err := db.Query("SELECT * FROM book")
-    checkErr(err)
-
-    //    //普通demo
-    for rows.Next() {
-        
-    }
-}
 var (
 	bookList map[string]*Book
 )
 
 func init(){
+	// set default database
+    orm.RegisterDataBase("bookManage", "mysql", "wx:wang...123@tcp(120.27.155.16:3306)/bookManage?charset=utf8", 30)
+
+    // register model
+    orm.RegisterModel(new(Book))
+
     bookList = make(map[string]*Book)
 }
- type Book struct{
-    Id int
-    Name string
- }
-func Query(id string) (a map[string]*Book,err1 error){
-	db, err := sql.Open("mysql", "wx:wang...123@tcp(120.27.155.16:3306)/bookManage?charset=utf8")
-    checkErr(err)
 
-   //rows, err := db.Query("SELECT id,name FROM book where id = " + id)
-    rows, err := db.Query("SELECT id,name FROM book")
-    checkErr(err)
-    for rows.Next() {
-        var id1 int
-        var name1 string
+func Query(id int) (a *Book,err1 error){
+	o := orm.NewOrm()
 
-        rows.Columns()
-        err = rows.Scan(&id1, &name1)
-        checkErr(err)
-        b := Book{id1,name1,}
-	    bookList[name1] = &b
-    }
-    return bookList,nil
+	book := Book{Id: id}
+	err = o.Read(&b)
+
+	return b, err
 }
 
-func checkErr(err error) {
-    if err != nil {
-        panic(err)
-    }
+//增加数据
+func insert(book *Book) (n int, err error){
+    o := orm.NewOrm()
 
+    num, err := o.Insert(&book)
+
+    return num, err
 }
+
+//删除数据
+func remove(book *Book) (n int, err error) {
+    o := orm.NewOrm()
+
+    num, err := o.Delete(&book)
+
+    return num, err
+}
+
+//更新数据
+func update(book *Book) (n int, err error) {
+    o := orm.NewOrm()
+
+    num, err := o.Update(&book)
+
+    return num, err
+}
+
