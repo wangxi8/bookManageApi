@@ -70,15 +70,15 @@ func init(){
     bookList = make(map[string]*Book)
 }
  type Book struct{
-    id int
-    name string
+    Id int
+    Name string
  }
 func Query(id string) (a map[string]*Book,err1 error){
 	db, err := sql.Open("mysql", "wx:wang...123@tcp(120.27.155.16:3306)/bookManage?charset=utf8")
     checkErr(err)
 
    //rows, err := db.Query("SELECT id,name FROM book where id = " + id)
-rows, err := db.Query("SELECT id,name FROM book")
+    rows, err := db.Query("SELECT id,name FROM book")
     checkErr(err)
     for rows.Next() {
         var id1 int
@@ -87,8 +87,8 @@ rows, err := db.Query("SELECT id,name FROM book")
         rows.Columns()
         err = rows.Scan(&id1, &name1)
         checkErr(err)
-        b := Book{1,"111",}
-	bookList[name1] = &b
+        b := Book{id1,name1,}
+	    bookList[name1] = &b
     }
     return bookList,nil
 }
