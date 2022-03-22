@@ -25,7 +25,7 @@ const pageSize = 10
 
 func init(){
 	// set default database
-    orm.RegisterDataBase("bookManage", "mysql", "wx:wang...123@tcp(120.27.155.16:3306)/bookManage?charset=utf8", 30)
+    orm.RegisterDataBase("default", "mysql", "wx:wang...123@tcp(120.27.155.16:3306)/bookManage?charset=utf8", 30)
 
     // register model
     orm.RegisterModel(new(Book))
