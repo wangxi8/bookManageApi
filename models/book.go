@@ -39,10 +39,10 @@ func Query(id int) (a *Book,err1 error){
 	book := Book{Id: id}
 	err := o.Read(&book)
 
-	return book, err
+	return &book, err
 }
 
-func QueryBookList(b *Book, page int) (list []*Book, n int, err error){
+func QueryBookList(b *Book, page int) (list []*Book, n int64, err error){
 	o := orm.NewOrm()
 
 	qs := o.QueryTable("book")
@@ -80,7 +80,7 @@ func Insert(book *Book) (n int64, err error){
 }
 
 //删除数据
-func Remove(book *Book) (n int, err error) {
+func Remove(book *Book) (n int64, err error) {
     o := orm.NewOrm()
 
     num, err := o.Delete(&book)
@@ -89,7 +89,7 @@ func Remove(book *Book) (n int, err error) {
 }
 
 //更新数据
-func UpdateBook(book *Book) (n int, err error) {
+func UpdateBook(book *Book) (n int64, err error) {
     o := orm.NewOrm()
 
     num, err := o.Update(&book)
