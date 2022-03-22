@@ -51,7 +51,7 @@ func (u *BookController) GetList() {
 	book.Isbn     = isbn
 	book.Location = location
 
-	bookArr, num, err := models.QueryBookList(&book, page)
+	bookArr, _, err := models.QueryBookList(&book, page)
 	if err != nil {
 		u.Data["json"] = err.Error()
 	} else {
@@ -93,7 +93,7 @@ func (u *BookController) Insert() {
 	book.Wechat   = wechat
 	book.Desc     = desc
 
-	num, err := models.Insert(&book)
+	_, err := models.Insert(&book)
 	if err != nil {
 		u.Data["json"] = err.Error()
 	} else {
@@ -116,7 +116,7 @@ func (u *BookController) Remove() {
 
 	book.Id = id
 	if id != 0 {
-		num, err := models.Remove(&book)
+		_, err := models.Remove(&book)
 		if err != nil {
 			u.Data["json"] = err.Error()
 		} else {
@@ -164,7 +164,7 @@ func (u *BookController) Update() {
 	book.Desc     = desc
 
 	if id != 0 {
-		num, err := models.UpdateBook(&book)
+		_, err := models.UpdateBook(&book)
 		if err != nil {
 			u.Data["json"] = err.Error()
 		} else {
