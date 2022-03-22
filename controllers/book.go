@@ -33,9 +33,9 @@ func (u *BookController) Get() {
 
 // @Title GetList
 // @Description get bookList
-// @Param	name		query 	string	true		"书名"
-// @Param	isbn		query 	string	true		"isbn"
-// @Param	location    query 	string	true		"位置"
+// @Param	name		query 	string	false		"书名"
+// @Param	isbn		query 	string	false		"isbn"
+// @Param	location    query 	string	false		"位置"
 // @Param	page		query 	int	true		"页数"
 // @Success 200 {object} models.Book
 // @router /getList [get]
