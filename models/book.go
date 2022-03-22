@@ -23,6 +23,8 @@ var (
 	bookList map[string]*Book
 )
 
+const pageSize = 10
+
 func init(){
 	// set default database
     orm.RegisterDataBase("bookManage", "mysql", "wx:wang...123@tcp(120.27.155.16:3306)/bookManage?charset=utf8", 30)
@@ -42,8 +44,36 @@ func Query(id int) (a *Book,err1 error){
 	return b, err
 }
 
+func QueryBookList(b *Book, page int) (list []*Book, n int, err error){
+	o := orm.NewOrm()
+
+	qs = o.QueryTable("book")
+	cond := orm.NewCondition()
+
+	if b.Name != "" {
+		cond.Or("name__iexact", b.Name)
+	}
+
+	if b.Isbn != "" {
+		cond.Or("isbn__iexact", b.Isbn)
+	}
+
+	if b.Location != "" {
+		cond.Or("location__iexact", b.Location)
+	}
+
+	var book []*Book
+	if page > 0 && pageSize > 0 {
+	    qs.Limit(pageSize).Offset((page - 1) * pageSize)
+	}
+	num, err := qs.SetCond(cond).All(&book)
+
+	return book, num, err
+	
+}
+
 //增加数据
-func insert(book *Book) (n int, err error){
+func Insert(book *Book) (n int, err error){
     o := orm.NewOrm()
 
     num, err := o.Insert(&book)
@@ -52,7 +82,7 @@ func insert(book *Book) (n int, err error){
 }
 
 //删除数据
-func remove(book *Book) (n int, err error) {
+func Remove(book *Book) (n int, err error) {
     o := orm.NewOrm()
 
     num, err := o.Delete(&book)
@@ -61,7 +91,7 @@ func remove(book *Book) (n int, err error) {
 }
 
 //更新数据
-func update(book *Book) (n int, err error) {
+func Update(book *Book) (n int, err error) {
     o := orm.NewOrm()
 
     num, err := o.Update(&book)
