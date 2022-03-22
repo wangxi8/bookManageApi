@@ -10,7 +10,7 @@ type Book struct{
     Name string `orm:"column(name)"`
     Isbn string `orm:"column(isbn)"`
     Author string `orm:"column(author)"`
-    Number int `orm:"column(number)"`
+    Number string `orm:"column(number)"`
     Location string `orm:"column(location)"`
     Mobile int `orm:"column(mobile)"`
     Wechat string `orm:"column(wechat)"`

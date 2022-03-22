@@ -20,7 +20,7 @@ type BookController struct {
 // @router /:id [get]
 func (u *BookController) Get() {
 	id, _ := u.GetInt(":id")
-	if id != "" {
+	if id != 0 {
 		book, err := models.Query(id)
 		if err != nil {
 			u.Data["json"] = err.Error()
@@ -93,7 +93,7 @@ func (u *BookController) Insert() {
 	book.Wechat   = wechat
 	book.Desc     = desc
 
-	num, err := models.Insert(book)
+	num, err := models.Insert(&book)
 	if err != nil {
 		u.Data["json"] = err.Error()
 	} else {
@@ -110,8 +110,8 @@ func (u *BookController) Insert() {
 // @Failure 403 :id is empty
 // @router /remove [post]
 func (u *BookController) Remove() {
-	id := u.GetString(":id")
-	if id != "" {
+	id, _ := u.GetInt(":id")
+	if id != 0 {
 		num, err := models.Remove(id)
 		if err != nil {
 			u.Data["json"] = err.Error()
@@ -137,7 +137,7 @@ func (u *BookController) Remove() {
 // @Failure 403 :id is empty
 // @router /update [post]
 func (u *BookController) Update() {
-	id        := u.GetString(":id")
+	id, _     := u.GetInt(":id")
 	name      := u.GetString(":name")
 	isbn      := u.GetString(":isbn")
 	location  := u.GetString(":location")
@@ -159,8 +159,8 @@ func (u *BookController) Update() {
 	book.Wechat   = wechat
 	book.Desc     = desc
 
-	if id != "" {
-		num, err := models.UpdateBook(book)
+	if id != 0 {
+		num, err := models.UpdateBook(&book)
 		if err != nil {
 			u.Data["json"] = err.Error()
 		} else {
