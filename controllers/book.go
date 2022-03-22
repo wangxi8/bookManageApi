@@ -97,7 +97,7 @@ func (u *BookController) Insert() {
 	if err != nil {
 		u.Data["json"] = err.Error()
 	} else {
-		u.Data["json"] = 'ok'
+		u.Data["json"] = "ok"
 	}
 
 	u.ServeJSON()
@@ -111,12 +111,16 @@ func (u *BookController) Insert() {
 // @router /remove [post]
 func (u *BookController) Remove() {
 	id, _ := u.GetInt(":id")
+
+	var book models.Book
+
+	book.Id = id
 	if id != 0 {
-		num, err := models.Remove(id)
+		num, err := models.Remove(&book)
 		if err != nil {
 			u.Data["json"] = err.Error()
 		} else {
-			u.Data["json"] = 'ok'
+			u.Data["json"] = "ok"
 		}
 	}
 	u.ServeJSON()
@@ -164,7 +168,7 @@ func (u *BookController) Update() {
 		if err != nil {
 			u.Data["json"] = err.Error()
 		} else {
-			u.Data["json"] = 'ok'
+			u.Data["json"] = "ok"
 		}
 	}
 	u.ServeJSON()
