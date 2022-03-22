@@ -1,7 +1,6 @@
 package models
 
 import (
-    "fmt"
     "github.com/astaxie/beego/orm"
     _"github.com/go-sql-driver/mysql"
 )
@@ -38,15 +37,15 @@ func Query(id int) (a *Book,err1 error){
 	o := orm.NewOrm()
 
 	book := Book{Id: id}
-	err = o.Read(&b)
+	err := o.Read(&book)
 
-	return b, err
+	return book, err
 }
 
 func QueryBookList(b *Book, page int) (list []*Book, n int, err error){
 	o := orm.NewOrm()
 
-	qs = o.QueryTable("book")
+	qs := o.QueryTable("book")
 	cond := orm.NewCondition()
 
 	if b.Name != "" {
@@ -72,7 +71,7 @@ func QueryBookList(b *Book, page int) (list []*Book, n int, err error){
 }
 
 //增加数据
-func Insert(book *Book) (n int, err error){
+func Insert(book *Book) (n int64, err error){
     o := orm.NewOrm()
 
     num, err := o.Insert(&book)
@@ -90,7 +89,7 @@ func Remove(book *Book) (n int, err error) {
 }
 
 //更新数据
-func Update(book *Book) (n int, err error) {
+func UpdateBook(book *Book) (n int, err error) {
     o := orm.NewOrm()
 
     num, err := o.Update(&book)

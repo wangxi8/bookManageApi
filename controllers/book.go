@@ -163,7 +163,7 @@ func (u *BookController) Update() {
 	book.Desc     = desc
 
 	if id != "" {
-		num, err := models.Update(book)
+		num, err := models.UpdateBook(book)
 		if err != nil {
 			u.Data["json"] = err.Error()
 		} else {
