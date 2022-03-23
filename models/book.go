@@ -51,15 +51,15 @@ func QueryBookList(b *Book, page int) (list []*Book, n int64, err error){
 	cond := orm.NewCondition()
 
 	if b.Name != "" {
-		cond.Or("name__iexact", b.Name)
+		cond = cond.Or("name__contains", b.Name)
 	}
 
 	if b.Isbn != "" {
-		cond.Or("isbn__iexact", b.Isbn)
+		cond = cond.Or("isbn__contains", b.Isbn)
 	}
 
 	if b.Location != "" {
-		cond.Or("location__iexact", b.Location)
+		cond = cond.Or("location__contains", b.Location)
 	}
 
 	var book []*Book
