@@ -76,7 +76,7 @@ func QueryBookList(b *Book, page int) (list []*Book, n int64, err error){
 func Insert(book *Book) (n int64, err error){
     o := orm.NewOrm()
 
-    num, err := o.Insert(&book)
+    num, err := o.Insert(book)
 
     return num, err
 }
@@ -85,7 +85,7 @@ func Insert(book *Book) (n int64, err error){
 func Remove(book *Book) (n int64, err error) {
     o := orm.NewOrm()
 
-    num, err := o.Delete(&book)
+    num, err := o.Delete(book)
 
     return num, err
 }
@@ -94,7 +94,7 @@ func Remove(book *Book) (n int64, err error) {
 func UpdateBook(book *Book) (n int64, err error) {
     o := orm.NewOrm()
 
-    num, err := o.Update(&book)
+    num, err := o.Update(book)
 
     return num, err
 }
