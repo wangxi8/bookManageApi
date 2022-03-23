@@ -30,6 +30,8 @@ func init(){
     // register model
     orm.RegisterModel(new(Book))
 
+    orm.Debug = true
+
     bookList = make(map[string]*Book)
 }
 
