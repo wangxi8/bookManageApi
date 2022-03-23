@@ -64,7 +64,7 @@ func QueryBookList(b *Book, page int) (list []*Book, n int64, err error){
 
 	var book []*Book
 	if page > 0 && pageSize > 0 {
-	    qs.Limit(pageSize).Offset((page - 1) * pageSize)
+	    qs = qs.Limit(pageSize).Offset((page - 1) * pageSize)
 	}
 	num, err := qs.SetCond(cond).All(&book)
 
