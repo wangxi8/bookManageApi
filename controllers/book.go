@@ -40,10 +40,10 @@ func (u *BookController) Get() {
 // @Success 200 {object} models.Book
 // @router /getList [get]
 func (u *BookController) GetList() {
-	name      := u.GetString(":name")
-	isbn      := u.GetString(":isbn")
-	location  := u.GetString(":location")
-	page, _ := u.GetInt(":page")
+	name      := u.GetString("name")
+	isbn      := u.GetString("isbn")
+	location  := u.GetString("location")
+	page, _ := u.GetInt("page")
 
 	var book models.Book
 
@@ -73,14 +73,14 @@ func (u *BookController) GetList() {
 // @Success 200 {object} models.Book
 // @router /insert [post]
 func (u *BookController) Insert() {
-	name      := u.GetString(":name")
-	isbn      := u.GetString(":isbn")
-	location  := u.GetString(":location")
-	author    := u.GetString(":author")
-	number    := u.GetString(":number")
-	mobile, _ := u.GetInt(":mobile")
-	wechat    := u.GetString(":wechat")
-	desc      := u.GetString(":desc")
+	name      := u.GetString("name")
+	isbn      := u.GetString("isbn")
+	location  := u.GetString("location")
+	author    := u.GetString("author")
+	number    := u.GetString("number")
+	mobile, _ := u.GetInt("mobile")
+	wechat    := u.GetString("wechat")
+	desc      := u.GetString("desc")
 
 	var book models.Book
 
@@ -110,7 +110,7 @@ func (u *BookController) Insert() {
 // @Failure 403 :id is empty
 // @router /remove [post]
 func (u *BookController) Remove() {
-	id, _ := u.GetInt(":id")
+	id, _ := u.GetInt("id")
 
 	var book models.Book
 
@@ -141,15 +141,15 @@ func (u *BookController) Remove() {
 // @Failure 403 :id is empty
 // @router /update [post]
 func (u *BookController) Update() {
-	id, _     := u.GetInt(":id")
-	name      := u.GetString(":name")
-	isbn      := u.GetString(":isbn")
-	location  := u.GetString(":location")
-	author    := u.GetString(":author")
-	number    := u.GetString(":number")
-	mobile, _ := u.GetInt(":mobile")
-	wechat    := u.GetString(":wechat")
-	desc      := u.GetString(":desc")
+	id, _     := u.GetInt("id")
+	name      := u.GetString("name")
+	isbn      := u.GetString("isbn")
+	location  := u.GetString("location")
+	author    := u.GetString("author")
+	number    := u.GetString("number")
+	mobile, _ := u.GetInt("mobile")
+	wechat    := u.GetString("wechat")
+	desc      := u.GetString("desc")
 
 	var book models.Book
 
