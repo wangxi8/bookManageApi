@@ -174,4 +174,23 @@ func (u *BookController) Update() {
 	u.ServeJSON()
 }
 
+// @Title get book info by third party
+// @Description get book by isbn
+// @Param	isbn		query 	string	true		"The key for book"
+// @Success 200 {object} models.Book
+// @Failure 403 :isbn is empty
+// @router /getBookInfo [get]
+func (u *BookController) GetBookInfo() {
+	isbn := u.GetString("isbn")
+	if isbn != "" {
+		book, err := models.getBookInfo(isbn)
+		if err != nil {
+			u.Data["json"] = err.Error()
+		} else {
+			u.Data["json"] = book
+		}
+	}
+	u.ServeJSON()
+}
+
 
