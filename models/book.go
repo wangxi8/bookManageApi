@@ -118,7 +118,7 @@ func getBookInfoByThird(isbn string) (b *Book, err error){
 		return nil, errors.New("dont have this book")
 	}
 
-	b := Book{"Name":result.0.title, "Author":result.0.author_name, "Pic":result.0.pic, "Year":result.0.year}
+	b := Book{Name:result[0].title, Author:result[0].author_name, Pic:result[0].pic, Year:result[0].year}
 
 	return b, err
 }
